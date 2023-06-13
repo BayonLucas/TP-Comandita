@@ -1,13 +1,14 @@
 <?php
     include_once "AccesoDatos.php";
 
-    class Usuario implements ICrud{
+    class Usuario{
         
         public $_id;
         public $_rol; //Bartender, Socio, cocinero, mozo, cervecero
         public $_nombre;
         public $_dni;
         public $_estado;
+        public $_idSector; //Ver
         public $_fechaRegistro;
         public $_fechaBaja;
 
