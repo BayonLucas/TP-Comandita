@@ -7,7 +7,7 @@
         public $_rol; //Bartender, Socio, cocinero, mozo, cervecero
         public $_nombre;
         public $_dni;
-        public $_estado;
+        public $_estado; //0 = Libre - 1 = Ocupado
         public $_idSector; //Ver
         public $_fechaRegistro;
         public $_fechaBaja;
@@ -17,7 +17,7 @@
             $this->_rol = $rol;
             $this->_nombre = $nombre;
             $this->_dni = $dni;
-            $this->_estado = 0; //0 = Libre - 1 = Ocupado
+            $this->_estado = 0; 
             $this->_fechaRegistro = date("d-m-Y");
             $this->_fechaBaja = null;
         }
@@ -28,7 +28,7 @@
             $consulta->bindValue(':rol', $this->_rol, PDO::PARAM_STR);
             $consulta->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $consulta->bindValue(':dni', $this->_dni, PDO::PARAM_STR);
-            $consulta->bindValue(':estado', $this->_estado, PDO::PARAM_STR);
+            $consulta->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
             $consulta->bindValue(':fechaRegistro', $this->_fechaRegistro);
             $consulta->bindValue(':fechaBaja', $_fechaBaja);
             $consulta->execute();

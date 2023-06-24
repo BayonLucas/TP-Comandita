@@ -4,28 +4,22 @@
     class Producto{
 
         public $_id;
+        public $_idSector;
         public $_nombre;
         public $_precio;
         public $_tiempoPreparado;
-        //public $_idSector;
 
         public function CrearProducto(){
-            $ret = null;
-            try{
-                $dbManager = AccesoDatos::obtenerInstancia();
-                $query = $dbManager->prepararConsulta("INSERT INTO productos (nombre, precio, tiempoPreparado) VALUES (:nombre, :precio, :tiempoPreparado)");
-                $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
-                $query->bindValue(':precio', $this->_precio, PDO::PARAM_INT);
-                $query->bindValue(':tiempoPreparado', $this->_tiempoPreparado, PDO::PARAM_INT);
-                $query->execute();
-                $ret = $dbManager->obtenerUltimoId();
-            }
-            catch(Throwable $mensaje){
-                printf("Error al conectar en la base de datos: <br> $mensaje .<br>");
-            }
-            finally{
-                return $ret;
-            }   
+            $dbManager = AccesoDatos::obtenerInstancia();
+            $query = $dbManager->prepararConsulta("INSERT INTO productos (idSector, nombre, precio, tiempoPreparado) VALUES (:idSector, :nombre, :precio, :tiempoPreparado)");
+            $query->bindValue(':idSector', $this->_idSector, PDO::PARAM_INT);
+            $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
+            $query->bindValue(':precio', $this->_precio, PDO::PARAM_INT);
+            $query->bindValue(':tiempoPreparado', $this->_tiempoPreparado, PDO::PARAM_INT);
+            
+            $query->execute();
+            
+            return $dbManager->obtenerUltimoId();
         }
     
         public static function ObtenerTodos(){
@@ -36,7 +30,7 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Producto');
         }
 
-        public static function ModificarMesa($id, $precio){       
+        public static function ModificarProducto($id, $precio){       
             try{
                 $objAccesoDato = AccesoDatos::obtenerInstancia();
                 $query = $objAccesoDato->prepararConsulta("UPDATE productos SET precio = :precio, WHERE id = :id");
