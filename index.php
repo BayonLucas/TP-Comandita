@@ -29,7 +29,8 @@ $app->addErrorMiddleware(true, true, true);
 // Routes
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->post('/alta', \UsuarioController::class . ':CargarUno');
-  // $group->get('[/]', \UsuarioController::class . ':TraerTodos');
+  $group->get('/listar', \UsuarioController::class . ':TraerTodos');
+  $group->get('/{rol}', \UsuarioController::class . ':TraerPorRol');
   // $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
 });
 

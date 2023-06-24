@@ -1,18 +1,25 @@
 <?php
 require_once './models/usuario.php';
 
-    class UsuarioController extends Usuario{
+    class UsuarioController{
         public function CargarUno($request, $response, $args){
             $params = $request->getParsedBody();
-            var_dump($params);
             // Creamos el usuario
             // $user = new Usuario($params["rol"], $params["nombre"], $params["dni"]);
-            // $user->CrearUsuario();
+                $user = new Usuario();
+                $user->_rol = $params["rol"];
+                $user->_nombre = $params["nombre"];
+                $user->_dni = $params["dni"];
+                $user->_estado = 0;
+                $user->_fechaRegistro = date("y-m-d");
+                $user->_fechaBaja = null;
+                
+            $user->CrearUsuario();
 
-            // $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
+            $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
 
-            // $response->getBody()->write($payload);
-            // return $response->withHeader('Content-Type', 'application/json');
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
         }
 
         public function TraerUno($request, $response, $args){
@@ -32,6 +39,18 @@ require_once './models/usuario.php';
             $response->getBody()->write($payload);
 
             return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        public function TraerPorRol($request, $response, $args){
+            $rol = $args["rol"];
+            // $rol = $request->getAttribute('rol');
+            echo $rol;
+            // $lista = Usuario::ObtenerPorRol($rol);
+            // $payload = json_encode(array("listaUsuario" => $lista));
+
+            // $response->getBody()->write($payload);
+
+            // return $response->withHeader('Content-Type', 'application/json');
         }
 
         // public function ModificarUno($request, $response, $args)
