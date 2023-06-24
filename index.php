@@ -9,12 +9,11 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . './vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
-require_once './middlewares/AutentificadorJWT.php';
-
-require_once './controllers/UsuarioController.php';
+require_once './controllers/usuarioController.php';
+// require_once './middlewares/AutentificadorJWT.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -29,95 +28,95 @@ $app->addErrorMiddleware(true, true, true);
 
 // Routes
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \UsuarioController::class . ':TraerTodos');
-  $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
-  $group->post('[/]', \UsuarioController::class . ':CargarUno');
+  $group->post('/alta', \UsuarioController::class . ':CargarUno');
+  // $group->get('[/]', \UsuarioController::class . ':TraerTodos');
+  // $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
 });
 
-$app->group('/login', function (RouteCollectorProxy $group){
-  $group->post('[/]', \UsuarioController::class . ':TraerUno');
-})->add(
-  //aca llamo al mw
-);
+// $app->group('/login', function (RouteCollectorProxy $group){
+//   $group->post('[/]', \UsuarioController::class . ':TraerUno');
+// })->add(
+//   //aca llamo al mw
+// );
 
 
-// JWT test routes
-$app->group('/jwt', function (RouteCollectorProxy $group) {
+// // JWT test routes
+// $app->group('/jwt', function (RouteCollectorProxy $group) {
 
-  $group->post('/crearToken', function (Request $request, Response $response) {    
-    $parametros = $request->getParsedBody();
+//   $group->post('/crearToken', function (Request $request, Response $response) {    
+//     $parametros = $request->getParsedBody();
 
-    $usuario = $parametros['usuario'];
-    $perfil = $parametros['perfil'];
-    $alias = $parametros['alias'];
+//     $usuario = $parametros['usuario'];
+//     $perfil = $parametros['perfil'];
+//     $alias = $parametros['alias'];
 
-    $datos = array('usuario' => $usuario, 'perfil' => $perfil, 'alias' => $alias);
+//     $datos = array('usuario' => $usuario, 'perfil' => $perfil, 'alias' => $alias);
 
-    $token = AutentificadorJWT::CrearToken($datos);
-    $payload = json_encode(array('jwt' => $token));
+//     $token = AutentificadorJWT::CrearToken($datos);
+//     $payload = json_encode(array('jwt' => $token));
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
-  });
+//     $response->getBody()->write($payload);
+//     return $response
+//       ->withHeader('Content-Type', 'application/json');
+//   });
 
-  $group->get('/devolverPayLoad', function (Request $request, Response $response) {
-    $header = $request->getHeaderLine('Authorization');
-    $token = trim(explode("Bearer", $header)[1]);
+//   $group->get('/devolverPayLoad', function (Request $request, Response $response) {
+//     $header = $request->getHeaderLine('Authorization');
+//     $token = trim(explode("Bearer", $header)[1]);
 
-    try {
-      $payload = json_encode(array('payload' => AutentificadorJWT::ObtenerPayLoad($token)));
-    } catch (Exception $e) {
-      $payload = json_encode(array('error' => $e->getMessage()));
-    }
+//     try {
+//       $payload = json_encode(array('payload' => AutentificadorJWT::ObtenerPayLoad($token)));
+//     } catch (Exception $e) {
+//       $payload = json_encode(array('error' => $e->getMessage()));
+//     }
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
-  });
+//     $response->getBody()->write($payload);
+//     return $response
+//       ->withHeader('Content-Type', 'application/json');
+//   });
 
-  $group->get('/devolverDatos', function (Request $request, Response $response) {
-    $header = $request->getHeaderLine('Authorization');
-    $token = trim(explode("Bearer", $header)[1]);
+//   $group->get('/devolverDatos', function (Request $request, Response $response) {
+//     $header = $request->getHeaderLine('Authorization');
+//     $token = trim(explode("Bearer", $header)[1]);
 
-    try {
-      $payload = json_encode(array('datos' => AutentificadorJWT::ObtenerData($token)));
-    } catch (Exception $e) {
-      $payload = json_encode(array('error' => $e->getMessage()));
-    }
+//     try {
+//       $payload = json_encode(array('datos' => AutentificadorJWT::ObtenerData($token)));
+//     } catch (Exception $e) {
+//       $payload = json_encode(array('error' => $e->getMessage()));
+//     }
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
-  });
+//     $response->getBody()->write($payload);
+//     return $response
+//       ->withHeader('Content-Type', 'application/json');
+//   });
 
-  $group->get('/verificarToken', function (Request $request, Response $response) {
-    $header = $request->getHeaderLine('Authorization');
-    $token = trim(explode("Bearer", $header)[1]);
-    $esValido = false;
+//   $group->get('/verificarToken', function (Request $request, Response $response) {
+//     $header = $request->getHeaderLine('Authorization');
+//     $token = trim(explode("Bearer", $header)[1]);
+//     $esValido = false;
 
-    try {
-      AutentificadorJWT::verificarToken($token);
-      $esValido = true;
-    } catch (Exception $e) {
-      $payload = json_encode(array('error' => $e->getMessage()));
-    }
+//     try {
+//       AutentificadorJWT::verificarToken($token);
+//       $esValido = true;
+//     } catch (Exception $e) {
+//       $payload = json_encode(array('error' => $e->getMessage()));
+//     }
 
-    if ($esValido) {
-      $payload = json_encode(array('valid' => $esValido));
-    }
+//     if ($esValido) {
+//       $payload = json_encode(array('valid' => $esValido));
+//     }
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
-  });
-});
+//     $response->getBody()->write($payload);
+//     return $response
+//       ->withHeader('Content-Type', 'application/json');
+//   });
+// });
 
 
-$app->get('[/]', function (Request $request, Response $response) {
-    $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP"));
-    $response->getBody()->write($payload);
-    return $response->withHeader('Content-Type', 'application/json');
-});
+// $app->get('[/]', function (Request $request, Response $response) {
+//     $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP"));
+//     $response->getBody()->write($payload);
+//     return $response->withHeader('Content-Type', 'application/json');
+// });
 
 $app->run();

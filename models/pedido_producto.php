@@ -9,8 +9,8 @@
         public $_idMesa;
         public $_idPedido;
 
-        public $_cgoPedido;
-        public $_cgoMesa;
+        public $_codPedido;
+        public $_codMesa;
         public $estado; //0 - Pendiente // 1 - En preparación // 2 - Listo 
 
         public $_fechaIngreso;
@@ -25,14 +25,14 @@
 
         public function CrearPedido_Producto(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedido_producto (idUsuario, idCliente, idMesa, idPedido, cgoPedido, cgoMesa, estado, fechaIngreso, tiempoTotalEspera, fechaFinalizado, importeTotal, fotoCliente, fechaAnulado) VALUES (:idUsuario, :idCliente, :idMesa, :idPedido, :cgoPedido, :cgoMesa, estado, :fechaIngreso, :tiempoTotalEspera, :fechaFinalizado, :importeTotal, :fotoCliente, :fechaAnulado)");
+            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedido_producto (idUsuario, idCliente, idMesa, idPedido, codPedido, codMesa, estado, fechaIngreso, tiempoTotalEspera, fechaFinalizado, importeTotal, fotoCliente, fechaAnulado) VALUES (:idUsuario, :idCliente, :idMesa, :idPedido, :codPedido, :codMesa, estado, :fechaIngreso, :tiempoTotalEspera, :fechaFinalizado, :importeTotal, :fotoCliente, :fechaAnulado)");
             $query->bindValue(':idUsuario', $this->_idUsuario, PDO::PARAM_INT);
             $query->bindValue(':idCliente', $this->_idCliente, PDO::PARAM_INT);
             $query->bindValue(':idMesa', $this->_idMesa, PDO::PARAM_INT);
             $query->bindValue(':idPedido', $this->_idPedido, PDO::PARAM_INT);
             
-            $query->bindValue(':cgoPedido', $this->_cgoPedido, PDO::PARAM_STR);
-            $query->bindValue(':cgoMesa', $this->_cgoMesa, PDO::PARAM_STR);
+            $query->bindValue(':codPedido', $this->_codPedido, PDO::PARAM_STR);
+            $query->bindValue(':codMesa', $this->_codMesa, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_STR);
             
             $query->bindValue(':fechaIngreso', $this->_fechaIngreso);

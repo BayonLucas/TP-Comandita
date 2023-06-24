@@ -7,25 +7,25 @@
         public $_nombre;
         public $_estado; //0 = desatendido - 1 = atendido
         public $_fechaIngreso;
-        public $_cgoMesa;
-        public $_cgoPedido;
+        public $_codMesa;
+        public $_codPedido;
         
         public function __construct($nombre){
             $this->nombre = $nombre;
             $this->_estado = 0; 
             $this->_fechaIngreso = date("Y-m-a");
-            $this->_cgoMesa = null;
-            $this->_cgoPedido = null;
+            $this->_codMesa = null;
+            $this->_codPedido = null;
         }
     
         public function CrearCliente(){
             $dbManager = AccesoDatos::obtenerInstancia();
-            $query = $dbManager->prepararConsulta("INSERT INTO clientes (nombre, estado, fechaIngreso, cgoMesa, cgoPedido) VALUES (:nombre, :estado, :fechaRegistro, :cgoMesa, :cgoPedido)");
+            $query = $dbManager->prepararConsulta("INSERT INTO clientes (nombre, estado, fechaIngreso, codMesa, codPedido) VALUES (:nombre, :estado, :fechaRegistro, :codMesa, :codPedido)");
             $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
             $query->bindValue(':fechaIngreso', date_format($this->_fechaIngreso, 'Y-m-d H:i:s'));
-            $query->bindValue(':cgoMesa', $this->_cgoMesa, PDO::PARAM_STR);
-            $query->bindValue(':cgoPedido', $this->_cgoPedido, PDO::PARAM_STR);
+            $query->bindValue(':codMesa', $this->_codMesa, PDO::PARAM_STR);
+            $query->bindValue(':codPedido', $this->_codPedido, PDO::PARAM_STR);
             $query->execute();
 
             return $dbManager->obtenerUltimoId();   
