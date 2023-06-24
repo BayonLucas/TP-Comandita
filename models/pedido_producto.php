@@ -18,12 +18,14 @@
         public $_fechaFinalizado;
         public $_importeTotal;
 
+        public $_fotoCliente;
+
         public $_fechaAnulado;
 
 
         public function CrearPedido_Producto(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedido_producto (idUsuario, idCliente, idMesa, idPedido, cgoPedido, cgoMesa, estado, fechaIngreso, tiempoTotalEspera, fechaFinalizado, importeTotal, fechaAnulado) VALUES (:idUsuario, :idCliente, :idMesa, :idPedido, :cgoPedido, :cgoMesa, estado, :fechaIngreso, :tiempoTotalEspera, :fechaFinalizado, :importeTotal, :fechaAnulado)");
+            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedido_producto (idUsuario, idCliente, idMesa, idPedido, cgoPedido, cgoMesa, estado, fechaIngreso, tiempoTotalEspera, fechaFinalizado, importeTotal, fotoCliente, fechaAnulado) VALUES (:idUsuario, :idCliente, :idMesa, :idPedido, :cgoPedido, :cgoMesa, estado, :fechaIngreso, :tiempoTotalEspera, :fechaFinalizado, :importeTotal, :fotoCliente, :fechaAnulado)");
             $query->bindValue(':idUsuario', $this->_idUsuario, PDO::PARAM_INT);
             $query->bindValue(':idCliente', $this->_idCliente, PDO::PARAM_INT);
             $query->bindValue(':idMesa', $this->_idMesa, PDO::PARAM_INT);
@@ -32,11 +34,14 @@
             $query->bindValue(':cgoPedido', $this->_cgoPedido, PDO::PARAM_STR);
             $query->bindValue(':cgoMesa', $this->_cgoMesa, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_STR);
-
+            
             $query->bindValue(':fechaIngreso', $this->_fechaIngreso);
             $query->bindValue(':tiempoTotalEspera', $this->_tiempoTotalEspera);
             $query->bindValue(':fechaFinalizado', $this->_fechaFinalizado);
             $query->bindValue(':totalImporte', $this->_totalImporte, PDO::PARAM_INT);
+            
+            $query->bindValue(':fotoCliente', $this->_fotoCliente, PDO::PARAM_STR);
+
             $query->bindValue(':fechaAnulado', $this->_fechaAnulado);
 
             $query->execute();
