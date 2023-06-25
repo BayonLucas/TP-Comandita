@@ -15,6 +15,7 @@ require_once './db/AccesoDatos.php';
 require_once './controllers/usuarioController.php';
 require_once './controllers/productoController.php';
 require_once './controllers/sectorController.php';
+require_once './controllers/mesaController.php';
 // require_once './middlewares/AutentificadorJWT.php';
 
 // Load ENV
@@ -54,6 +55,12 @@ $app->group('/sectores', function (RouteCollectorProxy $group) {
   $group->get('/id/{id}', \SectorController::class . ':TraerUno');
 });
 
+$app->group('/mesas', function (RouteCollectorProxy $group) {
+  $group->post('/alta', \MesaController::class . ':CargarUno');
+  $group->get('/listar', \MesaController::class . ':TraerTodos');
+  $group->get('/{codMesa}', \MesaController::class . ':TraerUno');
+  $group->put('/modificar', \MesaController::class . ':ModificarUno');
+});
 
 
 
