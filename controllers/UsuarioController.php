@@ -24,7 +24,7 @@ require_once './models/usuario.php';
 
         public function TraerUno($request, $response, $args){
             //Buscamos usuario por dni
-            $user = $args['dni'];
+            $user = $args['id'];
             $usuario = Usuario::obtenerUsuario($user);
             $payload = json_encode($usuario);
             
@@ -42,38 +42,37 @@ require_once './models/usuario.php';
         }
 
         public function TraerPorRol($request, $response, $args){
-            $rol = $args["rol"];
-            // $rol = $request->getAttribute('rol');
-            echo $rol;
-            // $lista = Usuario::ObtenerPorRol($rol);
-            // $payload = json_encode(array("listaUsuario" => $lista));
+            $rol = $args['rol'];    
+            $lista = Usuario::ObtenerPorRol($rol);
+            $payload = json_encode(array("listaUsuario($rol)" => $lista));
 
-            // $response->getBody()->write($payload);
+            $response->getBody()->write($payload);
 
-            // return $response->withHeader('Content-Type', 'application/json');
+            return $response->withHeader('Content-Type', 'application/json');
         }
 
-        // public function ModificarUno($request, $response, $args)
-        // {
-        //     $parametros = $request->getParsedBody();
+        public function ModificarUno($request, $response, $args){
+            $data = $request->getParsedBody();
+            Usuario::modificarUsuario($data["id"], $data["estado"], $data["fechaBaja"]);
 
-        //     $nombre = $parametros['nombre'];
-        //     Usuario::modificarUsuario($nombre);
+            $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
 
-        //     $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
-
-        //     $response->getBody()->write($payload);
-        //     return $response
-        //       ->withHeader('Content-Type', 'application/json');
-        // }
+            $response->getBody()->write($payload);
+            return $response
+              ->withHeader('Content-Type', 'application/json');
+        }
 
         public function BorrarUno($request, $response, $args){
-            $params = $request->getParsedBody();
+            $data = $request->getParsedBody();
 
-            $usuarioId = $params['id'];
-            Usuario::borrarUsuario($usuarioId);
-
-            $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
+            $usuario = Usuario::ObtenerUsuario($data["id"]);
+            if($usuario->_fechaBaja == null){
+                Usuario::borrarUsuario($data["id"]);
+                $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));   
+            }
+            else{
+                $payload = json_encode(array("mensaje" => "El Usuario fue borrado con anterioridad"));
+            }
             $response->getBody()->write($payload);
 
             return $response->withHeader('Content-Type', 'application/json');

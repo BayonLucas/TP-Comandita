@@ -24,6 +24,7 @@ $app = AppFactory::create();
 
 // Add error middleware
 $app->addErrorMiddleware(true, true, true);
+$app->addBodyParsingMiddleware();
 
 
 // Routes
@@ -31,7 +32,9 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->post('/alta', \UsuarioController::class . ':CargarUno');
   $group->get('/listar', \UsuarioController::class . ':TraerTodos');
   $group->get('/{rol}', \UsuarioController::class . ':TraerPorRol');
-  // $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
+  $group->get('/id/{id}', \UsuarioController::class . ':TraerUno');
+  $group->delete('/delete', \UsuarioController::class . ':BorrarUno');
+  $group->put('/modificar', \UsuarioController::class . ':ModificarUno');
 });
 
 // $app->group('/login', function (RouteCollectorProxy $group){

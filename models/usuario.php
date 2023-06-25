@@ -53,28 +53,73 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
         }
 
-        public static function ObtenerUsuario($dni){
+        public static function ObtenerUsuario($id){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE _dni = :dni");
-            $query->bindValue(':dni', $dni, PDO::PARAM_INT);
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->execute();
 
             return $query->fetchObject('Usuario');
         }
 
-        public static function ModificarUsuario($id, $estado){
+        public static function ModificarUsuario($id, $estado = null, $fechaBaja = null){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _estado = :estado WHERE _id = :id");
-            $query->bindValue(':estado', $estado, PDO::PARAM_STR);
-            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $queryStr = "UPDATE usuarios SET ";
+            $params = array(':id' => $id);
+        
+            if($estado !== null){
+                $queryStr .= "_estado = :estado";
+                $params[':estado'] = $estado;
+            }
+        
+            if($fechaBaja !== null){
+                if($estado !== null){
+                    $queryStr .= ", ";
+                }
+                $queryStr .= "_fechaBaja = :fechaBaja";
+                $params[':fechaBaja'] = null;
+            }
+        
+            $queryStr .= " WHERE _id = :id";
+            $query = $objAccesoDato->prepararConsulta($queryStr);
+            
+            foreach ($params as $key => &$value) {
+                if(is_int($value)){
+                    $query->bindParam($key, $value, PDO::PARAM_INT);
+                } 
+                else{
+                    $query->bindParam($key, $value);
+                }
+            }
             $query->execute();
+            /*$objAccesoDato = AccesoDatos::obtenerInstancia();
+            if($estado != null && $fechaBaja != null){
+                $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _estado = :estado, _fechaBaja = :fechaBaja  WHERE _id = :id");
+                $query->bindValue(':estado', $estado, PDO::PARAM_STR);
+                $query->bindValue(':fechaBaja', null);
+
+            }
+            else if($estado == null && $fechaBaja != null){
+                $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _fechaBaja = :fechaBaja WHERE _id = :id");
+                $query->bindValue(':fechaBaja', null);
+
+            }
+            else{
+                $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _estado = :estado WHERE _id = :id");
+                $query->bindValue(':estado', $estado, PDO::PARAM_STR);
+
+            }
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+
+            $query->execute();
+            */
         }
 
         public static function BorrarUsuario($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _fechaBaja = :fechaBaja WHERE _id = :id");
             $fecha = new DateTime(date("d-m-Y"));
-            $query->bindValue(':id', $usuario, PDO::PARAM_INT);
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->bindValue(':fechaBaja', date_format($fecha, 'y-m-d H:i:s'));
             $query->execute();
         } 
