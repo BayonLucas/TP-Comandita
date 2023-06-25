@@ -1,5 +1,5 @@
 <?php    
-    include_once "AccesoDatos.php";
+    include_once './db/AccesoDatos.php';
 
     class Producto{
 
@@ -11,7 +11,7 @@
 
         public function CrearProducto(){
             $dbManager = AccesoDatos::obtenerInstancia();
-            $query = $dbManager->prepararConsulta("INSERT INTO productos (idSector, nombre, precio, tiempoPreparado) VALUES (:idSector, :nombre, :precio, :tiempoPreparado)");
+            $query = $dbManager->prepararConsulta("INSERT INTO productos (_idSector, _nombre, _precio, _tiempoPreparado) VALUES (:idSector, :nombre, :precio, :tiempoPreparado)");
             $query->bindValue(':idSector', $this->_idSector, PDO::PARAM_INT);
             $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $query->bindValue(':precio', $this->_precio, PDO::PARAM_INT);
@@ -30,22 +30,36 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Producto');
         }
 
+        public static function ObtenerPorSector($idSector){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM productos WHERE _idSector = :idSector");
+            $query->bindValue(':idSector', $idSector, PDO::PARAM_STR);
+
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Producto');
+        }
+
+        public static function ObtenerProducto($id){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM productos WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->execute();
+
+            return $query->fetchObject('Producto');
+        }
+
         public static function ModificarProducto($id, $precio){       
-            try{
-                $objAccesoDato = AccesoDatos::obtenerInstancia();
-                $query = $objAccesoDato->prepararConsulta("UPDATE productos SET precio = :precio, WHERE id = :id");
-                $query->bindValue(':id', $id, PDO::PARAM_STR);
-                $query->bindValue(':precio', $precio, PDO::PARAM_INT);
-                $query->execute();
-            }
-            catch(Throwable $mensaje){
-                printf("Error al conectar en la base de datos: <br> $mensaje .<br>");
-            }
+            $objAccesoDato = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDato->prepararConsulta("UPDATE productos SET _precio = :precio WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query->bindValue(':precio', $precio, PDO::PARAM_INT);
+            $query->execute();
         }
 
         public static function BorrarProducto($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDato->prepararConsulta("DELETE from productos WHERE id = :id");
+            $query = $objAccesoDato->prepararConsulta("DELETE from productos WHERE _id = :id");
             $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->execute();
         } 

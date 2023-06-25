@@ -1,19 +1,13 @@
 <?php
-    include_once "AccesoDatos.php";
+    include_once './db/AccesoDatos.php';
 
     class Sector{
         public $_id;
         public $_nombre;
-        // public $_disponibilidad;
-
-        public function __construc($id, $nombre){
-            $this->_id = $id;
-            $this->_nombre = $nombre;
-        }
 
         public function CrearSector(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO sectores (nombre) VALUES (:nombre)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO sectores (_nombre) VALUES (:nombre)");
             $consulta->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
         
             $consulta->execute();
@@ -31,7 +25,7 @@
 
         public static function ObtenerSector($id){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM sectores WHERE id = :id");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM sectores WHERE _id = :id");
             $consulta->bindValue(':id', $id, PDO::PARAM_INT);
             $consulta->execute();
 

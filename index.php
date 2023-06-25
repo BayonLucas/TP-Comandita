@@ -13,6 +13,8 @@ require __DIR__ . './vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
 require_once './controllers/usuarioController.php';
+require_once './controllers/productoController.php';
+require_once './controllers/sectorController.php';
 // require_once './middlewares/AutentificadorJWT.php';
 
 // Load ENV
@@ -36,6 +38,26 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->delete('/delete', \UsuarioController::class . ':BorrarUno');
   $group->put('/modificar', \UsuarioController::class . ':ModificarUno');
 });
+
+$app->group('/productos', function (RouteCollectorProxy $group) {
+  $group->post('/alta', \ProductoController::class . ':CargarUno');
+  $group->get('/listar', \ProductoController::class . ':TraerTodos');
+  $group->get('/{idSector}', \ProductoController::class . ':TraerPorSector');
+  $group->get('/id/{id}', \ProductoController::class . ':TraerUno');
+  $group->delete('/delete', \ProductoController::class . ':BorrarUno');
+  $group->put('/modificar', \ProductoController::class . ':ModificarUno');
+});
+
+$app->group('/sectores', function (RouteCollectorProxy $group) {
+  $group->post('/alta', \SectorController::class . ':CargarUno');
+  $group->get('/listar', \SectorController::class . ':TraerTodos');
+  $group->get('/id/{id}', \SectorController::class . ':TraerUno');
+});
+
+
+
+
+
 
 // $app->group('/login', function (RouteCollectorProxy $group){
 //   $group->post('[/]', \UsuarioController::class . ':TraerUno');

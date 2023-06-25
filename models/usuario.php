@@ -11,16 +11,6 @@
         public $_fechaRegistro;
         public $_fechaBaja;
 
-        // public function __construct($rol, $nombre, $dni){
-        //     $this->_id = null;
-        //     $this->_rol = $rol;
-        //     $this->_nombre = $nombre;
-        //     $this->_dni = $dni;
-        //     $this->_estado = 0; 
-        //     $this->_fechaRegistro = date("y-m-d");
-        //     $this->_fechaBaja = null;
-        // }
-
         public function CrearUsuario(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (_rol, _nombre, _dni, _estado, _fechaRegistro, _fechaBaja) VALUES (:rol, :nombre, :dni, :estado, :fechaRegistro,  :fechaBaja)");
