@@ -1,22 +1,24 @@
 <?php
-    include_once "AccesoDatos.php";
+    include_once './db/AccesoDatos.php';
 
     class Pedido{
 
         public $_id;
         public $_idProducto;
+        public $_cantidad;
         public $_estado; //"Pendiente", "En preparacion", "Listo para servir"
         public $_fechaInicio;
         public $_fechaEstimadaFinal;
 
         public function CrearPedido(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (idProducto, estado, fechaInicio, fechaEstimadaFinal) VALUES (:idProducto, :estado, :fechaInicio, :fechaEstimadaFinal)");
+            $query = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (_id, _idProducto, _cantidad, _estado, _fechaInicio, _fechaEstimadaFinal) VALUES (:id, :idProducto, :cantidad, :estado, :fechaInicio, :fechaEstimadaFinal)");
+            $query->bindValue(':id', $this->_id, PDO::PARAM_INT);
             $query->bindValue(':idProducto', $this->_idProducto, PDO::PARAM_INT);
+            $query->bindValue(':cantidad', $this->_cantidad, PDO::PARAM_INT);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
             $query->bindValue(':fechaInicio', $this->_fechaInicio);
-            $query->bindValue(':fechaIngreso', $this->_fechaIngreso);
-            $query->bindValue(':fechaEstimadaFinal', $this->_fechaEstimadaFinal);
+            $query->bindValue(':fechaEstimadaFinal', date_format($this->_fechaEstimadaFinal, "y-m-d H:i:s"));
 
             $query->execute();
 
@@ -31,39 +33,53 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido');
         }
 
-        public static function ObtenerPedido($id){
+        public static function ObtenerPedido($id, $idProducto){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE id = :id");
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE _id = :id AND _idProducto = :idProducto");
             $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
             $query->execute();
 
             return $query->fetchObject('Pedido');
         }
 
-        // public static function Modificar($id, $estado){
-        //     $objAccesoDato = AccesoDatos::obtenerInstancia();
-        //     $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET estado = :estado WHERE id = :id");
-        //     $query->bindValue(':estado', $estado, PDO::PARAM_STR);
-        //     $query->bindValue(':id', $id, PDO::PARAM_INT);
-        //     $query->execute();
-        // }
+        public static function ObtenerPorId($id){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_STR);
 
-        // public static function BorrarPedido($id){
-        //     $objAccesoDato = AccesoDatos::obtenerInstancia();
-        //     $query = $objAccesoDato->prepararConsulta("UPDATE pedidos SET fechaAnulado = :fechaAnulado WHERE id = :id");
-        //     $fecha = new DateTime(date("d-m-Y"));
-        //     $query->bindValue(':id', $id, PDO::PARAM_INT);
-        //     $query->bindValue(':fechaAnulado', date_format($fecha, 'Y-m-d H:i:s'));
-        //     $query->execute();
-        // } 
+            $query->execute();
 
-        public static function BorrarCliente($id){
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+        }
+
+        public static function ModificarPedido($id, $idProducto, $cambio, $valor){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDato->prepararConsulta("DELETE from pedidos WHERE id = :id");
+            $queryStr = "UPDATE pedidos SET ";
+            switch($cambio){ // 0 = cantidad / 1 = estado 
+                case "cantidad":
+                    $queryStr .= "_cantidad = :cantidad ";
+                    break;
+                case "estado":
+                    $queryStr .= "_estado = :estado ";
+                    break;    
+            }
+            $queryStr .= "WHERE _id = :id AND _idProducto = :idProducto";
+            $query = $objAccesoDato->prepararConsulta($queryStr);
+            $query->bindValue(":$cambio", $valor, PDO::PARAM_INT);
             $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
+            $query->execute();
+        }
+
+        public static function BorrarPedido($id, $idProducto){
+            $objAccesoDato = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDato->prepararConsulta("UPDATE pedidos SET _cantidad = :cantidad WHERE _id = :id AND _idProducto = :idProducto");
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->bindValue(':idProducto', $idProducto, PDO::PARAM_INT);
+            $query->bindValue(':cantidad', 0, PDO::PARAM_INT);
             $query->execute();
         } 
-
 
     }
 

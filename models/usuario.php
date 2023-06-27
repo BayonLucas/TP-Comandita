@@ -18,7 +18,7 @@
             $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $query->bindValue(':dni', $this->_dni, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
-            $query->bindValue(':fechaRegistro', $this->_fechaRegistro);
+            $query->bindValue(':fechaRegistro', date_format($this->_fechaRegistro, "y-m-d H:i:s"));
             $query->bindValue(':fechaBaja', $this->_fechaBaja);
             $query->execute();
 

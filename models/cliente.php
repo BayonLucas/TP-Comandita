@@ -1,5 +1,5 @@
 <?php
-    include_once "AccesoDatos.php";
+    include_once './db/AccesoDatos.php';
 
     class Cliente{
         
@@ -10,20 +10,13 @@
         public $_codMesa;
         public $_codPedido;
         
-        public function __construct($nombre){
-            $this->nombre = $nombre;
-            $this->_estado = 0; 
-            $this->_fechaIngreso = date("Y-m-a");
-            $this->_codMesa = null;
-            $this->_codPedido = null;
-        }
-    
         public function CrearCliente(){
             $dbManager = AccesoDatos::obtenerInstancia();
-            $query = $dbManager->prepararConsulta("INSERT INTO clientes (nombre, estado, fechaIngreso, codMesa, codPedido) VALUES (:nombre, :estado, :fechaRegistro, :codMesa, :codPedido)");
+            $query = $dbManager->prepararConsulta("INSERT INTO clientes (_nombre, _estado, _fechaIngreso, _codMesa, _codPedido) VALUES (:nombre, :estado, :fechaIngreso, :codMesa, :codPedido)");
+            
             $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
-            $query->bindValue(':fechaIngreso', date_format($this->_fechaIngreso, 'Y-m-d H:i:s'));
+            $query->bindValue(':fechaIngreso', date_format(new DateTime($this->_fechaIngreso), 'Y-m-d H:i:s'));
             $query->bindValue(':codMesa', $this->_codMesa, PDO::PARAM_STR);
             $query->bindValue(':codPedido', $this->_codPedido, PDO::PARAM_STR);
             $query->execute();
@@ -39,10 +32,18 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Cliente');
         }
 
+        public static function ObtenerCliente($id){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM clientes WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->execute();
+
+            return $query->fetchObject('Cliente');
+        }
         public static function ModificarCliente($id, $estado){       
             try{
                 $objAccesoDato = AccesoDatos::obtenerInstancia();
-                $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET estado = :estado, WHERE id = :id");
+                $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET _estado = :estado, WHERE _id = :id");
                 $query->bindValue(':id', $id, PDO::PARAM_STR);
                 $query->bindValue(':estado', $estado, PDO::PARAM_STR);
                 $query->execute();
@@ -54,7 +55,7 @@
 
         public static function BorrarCliente($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDato->prepararConsulta("DELETE from clientes WHERE id = :id");
+            $query = $objAccesoDato->prepararConsulta("DELETE from clientes WHERE _id = :id");
             $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->execute();
         } 

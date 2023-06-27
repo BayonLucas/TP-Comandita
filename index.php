@@ -16,6 +16,8 @@ require_once './controllers/usuarioController.php';
 require_once './controllers/productoController.php';
 require_once './controllers/sectorController.php';
 require_once './controllers/mesaController.php';
+require_once './controllers/pedidoController.php';
+require_once './controllers/clienteController.php';
 // require_once './middlewares/AutentificadorJWT.php';
 
 // Load ENV
@@ -62,9 +64,21 @@ $app->group('/mesas', function (RouteCollectorProxy $group) {
   $group->put('/modificar', \MesaController::class . ':ModificarUno');
 });
 
+$app->group('/pedidos', function (RouteCollectorProxy $group) {
+  $group->post('/alta', \PedidoController::class . ':CargarUno');
+  $group->get('/listar', \PedidoController::class . ':TraerTodos');
+  $group->get('/id/{id}', \PedidoController::class . ':TraerPorId');
+  $group->put('/modificar', \PedidoController::class . ':ModificarUno');
+  $group->delete('/delete', \PedidoController::class . ':BorrarUno');
+});
 
-
-
+$app->group('/clientes', function (RouteCollectorProxy $group) {
+  $group->post('/alta', \ClienteController::class . ':CargarUno');
+  $group->get('/listar', \ClienteController::class . ':TraerTodos');
+  $group->get('/id/{id}', \ClienteController::class . ':TraerUno');
+  $group->put('/modificar', \ClienteController::class . ':ModificarUno');
+  $group->delete('/delete', \ClienteController::class . ':BorrarUno');
+});
 
 // $app->group('/login', function (RouteCollectorProxy $group){
 //   $group->post('[/]', \UsuarioController::class . ':TraerUno');

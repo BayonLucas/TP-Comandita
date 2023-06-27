@@ -23,6 +23,19 @@
 
             return $query->fetchObject('Mesa');
         }
+        public static function ObtenerMesaLibre(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM mesas WHERE _estado = 0");
+            $query->execute();
+            $mesasLibres = $query->fetchAll(PDO::FETCH_CLASS, 'Mesa'); 
+
+            //Modifico mesa a ocupada
+            $mesa = $mesasLibres[rand(0, count($mesasLibres)-1)];
+            Mesa::ModificarMesa($mesa->_id, $mesa->_estado+1);
+
+            return $mesa->_codMesa;
+        }
+
         public static function ObtenerTodos(){
             $dbManager = AccesoDatos::obtenerInstancia();
             $query = $dbManager->prepararConsulta("SELECT * FROM mesas");

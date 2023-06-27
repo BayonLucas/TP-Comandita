@@ -1,5 +1,5 @@
 <?php
-    include_once "AccesoDatos.php";
+    include_once './db/AccesoDatos.php';
 
     class Pedido_Producto{
 
@@ -35,7 +35,7 @@
             $query->bindValue(':codMesa', $this->_codMesa, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_STR);
             
-            $query->bindValue(':fechaIngreso', $this->_fechaIngreso);
+            $query->bindValue(':fechaIngreso', date_format($this->_fechaIngreso, "Y-m-d H:i:s"));
             $query->bindValue(':tiempoTotalEspera', $this->_tiempoTotalEspera);
             $query->bindValue(':fechaFinalizado', $this->_fechaFinalizado);
             $query->bindValue(':totalImporte', $this->_totalImporte, PDO::PARAM_INT);
