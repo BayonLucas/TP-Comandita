@@ -94,4 +94,4 @@ $app->group('/login', function (RouteCollectorProxy $group){
   $group->post('[/]', \UsuarioController::class . ':Login');
 });
 
-$app->run();
+$app->run(); 
