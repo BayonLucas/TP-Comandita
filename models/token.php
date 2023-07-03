@@ -1,20 +1,21 @@
 <?php
 
 use Firebase\JWT\JWT;
+use Firebase\JWT\key;
 
-class AutentificadorJWT
-{
-    private static $claveSecreta = 'T3sT$JWT';
+class Token{
+    private static $claveSecreta = 'Lu$B4JwT';
     private static $tipoEncriptacion = ['HS256'];
 
-    public static function CrearToken($datos){
+    public static function CrearToken($id, $rol, $admin = false){
         $ahora = time();
         $payload = array(
             'iat' => $ahora,
-            'exp' => $ahora + (60000),
+            'exp' => $ahora + (60000)*24*90,
             'aud' => self::Aud(),
-            'data' => $datos,
-            'app' => "Test JWT"
+            'idUsuario' => $id,
+            'rol' => $rol,
+            'admin' => $admin,
         );
         return JWT::encode($payload, self::$claveSecreta);
     }
@@ -24,11 +25,7 @@ class AutentificadorJWT
             throw new Exception("El token esta vacio.");
         }
         try {
-            $decodificado = JWT::decode(
-                $token,
-                self::$claveSecreta,
-                self::$tipoEncriptacion
-            );
+            $decodificado = JWT::decode($token, self::$claveSecreta, self::$tipoEncriptacion);
         } catch (Exception $e) {
             throw $e;
         }
@@ -48,12 +45,19 @@ class AutentificadorJWT
         );
     }
 
-    public static function ObtenerData($token){
+    public static function ObtenerRol($token){
         return JWT::decode(
             $token,
             self::$claveSecreta,
             self::$tipoEncriptacion
-        )->data;
+        )->rol;
+    }
+    public static function ObtenerIdUsuario($token){
+        return JWT::decode(
+            $token,
+            self::$claveSecreta,
+            self::$tipoEncriptacion
+        )->idUsuario;
     }
 
     private static function Aud(){

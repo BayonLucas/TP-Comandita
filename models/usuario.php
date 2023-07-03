@@ -108,10 +108,20 @@
         public static function BorrarUsuario($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE usuarios SET _fechaBaja = :fechaBaja WHERE _id = :id");
-            $fecha = new DateTime(date("d-m-Y"));
+            $fecha = new DateTime(date("Y-m-d H:i:s"));
             $query->bindValue(':id', $id, PDO::PARAM_INT);
-            $query->bindValue(':fechaBaja', date_format($fecha, 'y-m-d H:i:s'));
+            $query->bindValue(':fechaBaja', date_format($fecha, 'Y-m-d H:i:s'));
             $query->execute();
         } 
+
+        public static function ObtenerUsuarioActivo($nombre, $dni){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE _nombre = :nombre AND _dni = :dni AND _fechaBaja is NULL");
+            $query->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            $query->bindValue(':dni', $dni, PDO::PARAM_STR);
+            $query->execute();
+
+            return $query->fetchObject('Usuario');
+        }
     }
 ?>
