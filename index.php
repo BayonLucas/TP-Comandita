@@ -19,6 +19,7 @@ require_once './controllers/mesaController.php';
 require_once './controllers/pedidoController.php';
 require_once './controllers/clienteController.php';
 require_once './controllers/pedidoProductoController.php';
+require_once './controllers/csvController.php';
 
 require_once './middlewares/tomarPedidoMW.php';
 require_once './middlewares/soloSocioMW.php';
@@ -105,6 +106,10 @@ $app->group('/aTrabajar', function (RouteCollectorProxy $group) {
   $group->post('/encuestar/{id}', \Pedido_ProductoController::class . ':Encuestar');
 })->add(new TomarPedidoMW());
 
+$app->group('/csv', function (RouteCollectorProxy $group){
+  $group->get('/descargar/{entidad}', \CsvController::class . ':DescargarCSV');
+  $group->post('/cargar/{entidad}', \CsvController::class . ':CargarCSV');
+});
 
 
 $app->run(); 
