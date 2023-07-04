@@ -102,6 +102,7 @@ $app->group('/aTrabajar', function (RouteCollectorProxy $group) {
   $group->post('/servirPedidos', \Pedido_ProductoController::class . ':ServirPedidos');
   $group->post('/cobrarPedidos', \Pedido_ProductoController::class . ':Cobrar');
   $group->post('/cerrarMesas', \Pedido_ProductoController::class . ':CerrarMesas')->add(new SoloSocioMW());
+  $group->post('/encuestar/{id}', \Pedido_ProductoController::class . ':Encuestar');
 })->add(new TomarPedidoMW());
 
 

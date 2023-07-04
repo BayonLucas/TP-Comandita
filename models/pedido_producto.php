@@ -160,7 +160,15 @@
             return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido_Producto');
         }
     
-    
+        public static function ObtenerPedidoPorCodigos($codPedido, $codMesa){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedido_producto WHERE _codPedido = :codPedido AND _codMesa = :codMesa");
+            $query->bindValue(':codPedido', $codPedido, PDO::PARAM_STR);
+            $query->bindValue(':codMesa', $codMesa, PDO::PARAM_STR);
+            $query->execute();
+
+            return $query->fetchObject('Pedido_Producto');
+        }
     }
 
 

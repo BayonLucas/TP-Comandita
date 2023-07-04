@@ -123,7 +123,7 @@
             $arr = array("_fotoCliente" => $fotoPath);
 
             Pedido_Producto::Modificar($data["id"], $arr);
-            $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));   
+            $payload = json_encode(array("mensaje" => "Foto tomada con exito"));   
             $response->getBody()->write($payload);
 
             return $response->withHeader('Content-Type', 'application/json');
@@ -230,25 +230,11 @@
                 foreach($listaPP as $item){
                     Mesa::ModificarEstadoPorCodigo($item->_codMesa, 4);
                     array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa - Importe a pagar: $item->_importeTotal");
-                    
-                    //Aplicar Encuesta
-                    $encuesta = new Encuesta();
-                    $encuesta->_idCliente = $item->_idCliente;
-                    $encuesta->_idUsuario = $item->_idUsuario;
-                    $encuesta->_idPedido = $item->_id;
-                    $encuesta->_idMesa = $item->_idMesa;
-                    $encuesta->_ptoMesa = $params["ptoMesa"];
-                    $encuesta->_ptoMozo = $params["ptoMozo"];
-                    $encuesta->_ptoResto = $params["ptoResto"];
-                    $encuesta->_ptoChef = $params["ptoChef"];
-                    $encuesta->_resenia = $params["resenia"];
-                    $encuenta->_fecha = $item->_fechaFinalizado;
-                    $encuesta->CrearEncuesta();
                 }
                 $payload = json_encode(array("listaPedidosTerminados" => $data));
             }
             else{
-
+                $payload = json_encode(array("listaPedidosTerminados" => "No se encontraron pedidos Listos para cobrar"));
             }
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
@@ -258,18 +244,58 @@
         public function CerrarMesas($request, $response, $args){
             $data = array();
             $listaPP = Pedido_Producto::ObtenerTodosLosListos();
-            foreach($listaPP as $item){
-                $mesa = Mesa::ObtenerMesa($item->_codMesa); 
-                if($mesa->_estado == 4){
-                    Mesa::ModificarEstadoPorCodigo($item->_codMesa, 5);
-                    Pedido_Producto::Modificar($item->_id, array("_estado" => 2, "_fechaFinalizado" => new DateTime(date("Y-m-d H:i:s"))));
+            if(count($listaPP)){
+                foreach($listaPP as $item){
+                    $mesa = Mesa::ObtenerMesa($item->_codMesa); 
+                    if($mesa->_estado == 4){
+                        Mesa::ModificarEstadoPorCodigo($item->_codMesa, 5);
+                        $fecha = date("Y-m-d H:i:s");
+                        Pedido_Producto::Modificar($item->_id, array("_fechaFinalizado" => $fecha));
+                        array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa - Importe Cobrado: $item->_importeTotal - Fecha de Cierre: $fecha");
+                    }
                 }
-                array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa - Importe Cobrado: $item->_importeTotal - Fecha de Cierre: $item->_fechaFinalizado");
+            }
+            else{
+                array_push($data, "No hay pedidos cobrados como para cerrar mesas");
             }
             $payload = json_encode(array("listaMesasCerradas:" => $data));
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
 
+        //Encuestar
+        public function Encuestar($request, $response, $args){
+            $id = $args['id'];
+            $params = $request->getParsedBody();
+    
+            $cliente = Cliente::ObtenerCliente($id);
+            if($cliente->_estado == 1){
+                $pedido = Pedido_Producto::ObtenerPedidoPorCodigos($cliente->_codPedido, $cliente->_codMesa);
+                if($pedido->_estado == 2){
+                    //Aplicar Encuesta
+                    $encuesta = new Encuesta();
+                    $encuesta->_idCliente = $pedido->_idCliente;
+                    $encuesta->_idUsuario = $pedido->_idUsuario;
+                    $encuesta->_idPedido = $pedido->_id;
+                    $encuesta->_idMesa = $pedido->_idMesa;
+                    $encuesta->_ptoMesa = $params["ptoMesa"];
+                    $encuesta->_ptoMozo = $params["ptoMozo"];
+                    $encuesta->_ptoResto = $params["ptoResto"];
+                    $encuesta->_ptoChef = $params["ptoChef"];
+                    $encuesta->_resenia = $params["resenia"];
+                    $encuesta->_fecha = $pedido->_fechaFinalizado;
+                    $encuesta->CrearEncuesta();
+                    $payload = json_encode(array("Encuesta:" => "Cargada"));
+                }
+                else{
+                    $payload = json_encode(array("Encuesta:" => "El pedido no se ha concretado"));
+                }
+            }
+            else{
+                $payload = json_encode(array("Encuesta:" => "El cliente no ha sido atendido"));
+            }
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 ?>

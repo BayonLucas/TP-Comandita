@@ -16,7 +16,7 @@
 
         public function CrearEncuesta(){
             $dbManager = AccesoDatos::obtenerInstancia();
-            $query = $dbManager->prepararConsulta("INSERT INTO clientes (_idCliente, _idUsuario, _idPedido, _idMesa, _ptoMesa, _ptoMozo, _ptoResto, _ptoChef, _resenia, _fecha) VALUES (:idCliente, :idUsuario, :idPedido, :idMesa, :ptoMesa, :ptoMozo, :ptoResto, :ptoChef, :resenia, :fecha)");
+            $query = $dbManager->prepararConsulta("INSERT INTO encuestas (_idCliente, _idUsuario, _idPedido, _idMesa, _ptoMesa, _ptoMozo, _ptoResto, _ptoChef, _resenia, _fecha) VALUES (:idCliente, :idUsuario, :idPedido, :idMesa, :ptoMesa, :ptoMozo, :ptoResto, :ptoChef, :resenia, :fecha)");
             
             $query->bindValue(':idCliente', $this->_idCliente, PDO::PARAM_INT);
             $query->bindValue(':idUsuario', $this->_idUsuario, PDO::PARAM_INT);

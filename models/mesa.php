@@ -49,8 +49,8 @@
         public static function ModificarMesa($id, $estado){       
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE mesas SET _estado = :estado WHERE _id = :id");
-            $query->bindValue(':id', $id, PDO::PARAM_STR);
-            $query->bindValue(':estado', $estado);
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
+            $query->bindValue(':estado', $estado, PDO::PARAM_INT);
             $query->execute();
         }
 
@@ -65,7 +65,7 @@
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE mesas SET _estado = :estado WHERE _codMesa = :codMesa");
             $query->bindValue(':codMesa', $codMesa, PDO::PARAM_STR);
-            $query->bindValue(':estado', $estado);
+            $query->bindValue(':estado', $estado, PDO::PARAM_INT);
             $query->execute();
         }
 

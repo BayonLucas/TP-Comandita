@@ -33,7 +33,7 @@
         public static function ObtenerPorSector($idSector){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDatos->prepararConsulta("SELECT * FROM productos WHERE _idSector = :idSector");
-            $query->bindValue(':idSector', $idSector, PDO::PARAM_STR);
+            $query->bindValue(':idSector', $idSector, PDO::PARAM_INT);
 
             $query->execute();
 
@@ -52,7 +52,7 @@
         public static function ModificarProducto($id, $precio){       
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE productos SET _precio = :precio WHERE _id = :id");
-            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->bindValue(':precio', $precio, PDO::PARAM_INT);
             $query->execute();
         }
