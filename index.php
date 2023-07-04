@@ -83,7 +83,7 @@ $app->group('/clientes', function (RouteCollectorProxy $group) {
 
 $app->group('/pp', function (RouteCollectorProxy $group) {
   $group->post('/alta', \Pedido_ProductoController::class . ':CargarUno')->add(new TomarPedidoMW());
-  $group->post('/tomarFoto', \Pedido_ProductoController::class . ':TomarFoto')->add(new TomarPedidoMW());
+  $group->post('/tomarFoto', \Pedido_ProductoController::class . ':TomarFoto');
   $group->get('/listar', \Pedido_ProductoController::class . ':TraerTodos');
   $group->get('/id/{id}', \Pedido_ProductoController::class . ':TraerPorId');
   $group->put('/modificar/{id}', \Pedido_ProductoController::class . ':ModificarUno');

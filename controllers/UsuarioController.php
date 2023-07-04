@@ -7,6 +7,7 @@ require_once './models/token.php';
             $params = $request->getParsedBody();
                 $user = new Usuario();
                 $user->_rol = $params["rol"];
+                $user->_idSector = Usuario::AsignarSector($user->_rol);
                 $user->_nombre = $params["nombre"];
                 $user->_dni = $params["dni"];
                 $user->_estado = 0;
@@ -92,5 +93,6 @@ require_once './models/token.php';
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
+        
     }
 ?>

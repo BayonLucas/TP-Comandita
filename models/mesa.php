@@ -4,7 +4,7 @@
     class Mesa{
         
         public $_id;
-        public $_estado; //"con cliente esperando pedido", "con cliente comiendo", "con cliente pagando", "cerrada"
+        public $_estado; // 1 => "Ocupada", 2 => "con cliente esperando pedido", 3 => "con cliente comiendo", 4 => "con cliente pagando", 5 => "cerrada"
         public $_codMesa;
 
         public function CrearMesa(){
@@ -15,6 +15,7 @@
             $query->execute();
             return $dbManager->obtenerUltimoId();   
         }
+
         public static function ObtenerMesa($codMesa){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDatos->prepararConsulta("SELECT * FROM mesas WHERE _codMesa = :codMesa");
@@ -23,6 +24,7 @@
 
             return $query->fetchObject('Mesa');
         }
+
         public static function ObtenerMesaLibre(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDatos->prepararConsulta("SELECT * FROM mesas WHERE _estado = 0");
@@ -43,6 +45,7 @@
 
             return $query->fetchAll(PDO::FETCH_CLASS, 'Mesa');
         }
+
         public static function ModificarMesa($id, $estado){       
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE mesas SET _estado = :estado WHERE _id = :id");
@@ -50,6 +53,7 @@
             $query->bindValue(':estado', $estado);
             $query->execute();
         }
+
         public static function BorrarMesa($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("DELETE from mesas WHERE _id = :id");
@@ -57,6 +61,13 @@
             $query->execute();
         } 
 
+        public static function ModificarEstadoPorCodigo($codMesa, $estado){       
+            $objAccesoDato = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDato->prepararConsulta("UPDATE mesas SET _estado = :estado WHERE _codMesa = :codMesa");
+            $query->bindValue(':codMesa', $codMesa, PDO::PARAM_STR);
+            $query->bindValue(':estado', $estado);
+            $query->execute();
+        }
 
     }
 

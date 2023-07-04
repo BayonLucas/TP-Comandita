@@ -81,6 +81,34 @@
             $query->execute();
         } 
 
+        public static function ObtenerPedidosOrdenadosPorFecha(){ //Provisoria
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE pedidos._estado = 0 ORDER BY pedidos._fechaInicio");
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+        }
+
+        public static function ObtenerPedidosPorSector($idSector){ //Provisoria
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT pedidos._id, pedidos._idProducto, pedidos._cantidad, pedidos._estado, pedidos._fechaInicio, pedidos._fechaEstimadaFinal FROM pedidos INNER JOIN productos on pedidos._idProducto = productos._id WHERE productos._idSector = :idSector AND pedidos._estado = 0 ORDER by pedidos._fechaInicio");
+            $query->bindValue(':idSector', $idSector, PDO::PARAM_INT);
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+        }
+
+        public static function ObtenerPedidosPorEstado($estado){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE pedidos._estado = :estado ORDER BY pedidos._fechaInicio");
+            $query->bindValue(':estado', $estado, PDO::PARAM_INT);
+
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+        }
+
+        
     }
 
 

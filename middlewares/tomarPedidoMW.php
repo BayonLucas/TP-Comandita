@@ -14,6 +14,9 @@ require_once './models/token.php';
                     $token = trim(explode("Bearer", $header)[1]);
                     $rol = Token::ObtenerRol($token);
                     if($rol == 'Mozo' || $rol == "Socio"){
+                        json_encode(array('datos' => Token::VerificarToken($token)));
+                        $idUser = Token::ObtenerIdUsuario();   
+                        echo "Token validado: \n idUsuario = $idUser";
                         return $handler->handle($request);
                     }
                     throw new Exception("Usuario no autorizado");

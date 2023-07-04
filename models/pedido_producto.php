@@ -145,7 +145,20 @@
             $row = $query->fetch(PDO::FETCH_ASSOC);
             return $row['_id'];
         }
+        public static function ObtenerTodosNoListos(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * from pedido_producto WHERE pedido_producto._estado != 2");
+            $query->execute();
 
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido_Producto');
+        }
+        public static function ObtenerTodosLosListos(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * from pedido_producto WHERE pedido_producto._estado = 2");
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido_Producto');
+        }
     
     
     }

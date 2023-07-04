@@ -1,6 +1,6 @@
 <?php
 require_once './models/cliente.php';
-require_once './controllers/mesaController.php';
+require_once './models/mesa.php';
 
     class ClienteController{
         public function CargarUno($request, $response, $args){
@@ -12,6 +12,7 @@ require_once './controllers/mesaController.php';
                 $fecha = new DateTime();
                 $client->_fechaIngreso = $fecha->format("Y-m-d H:i:s");
                 $client->_codMesa = Mesa::ObtenerMesaLibre();
+                    Mesa::ModificarEstadoPorCodigo($client->_codMesa, 1);
                 $client->_codPedido = null;
                 
             $client->CrearCliente();

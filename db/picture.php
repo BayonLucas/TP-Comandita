@@ -5,7 +5,6 @@ class Picture{
         $dir = "";
         if(isset($_FILES["foto"]) && file_exists($destino)){
             $dir = ".".DIRECTORY_SEPARATOR.$destino.DIRECTORY_SEPARATOR.$nombreFoto.".".pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
-            echo $dir;
             move_uploaded_file($_FILES["foto"]["tmp_name"], $dir); 
         }
         return strval($dir);

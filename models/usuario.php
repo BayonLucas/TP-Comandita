@@ -5,6 +5,7 @@
         
         public $_id;
         public $_rol; //Bartender, Socio, cocinero, mozo, cervecero
+        public $_idSector;
         public $_nombre;
         public $_dni;
         public $_estado; //0 = Libre - 1 = Ocupado
@@ -13,8 +14,9 @@
 
         public function CrearUsuario(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (_rol, _nombre, _dni, _estado, _fechaRegistro, _fechaBaja) VALUES (:rol, :nombre, :dni, :estado, :fechaRegistro,  :fechaBaja)");
+            $query = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (_rol, _idSector, _nombre, _dni, _estado, _fechaRegistro, _fechaBaja) VALUES (:rol, :idSector, :nombre, :dni, :estado, :fechaRegistro,  :fechaBaja)");
             $query->bindValue(':rol', $this->_rol, PDO::PARAM_STR);
+            $query->bindValue(':idSector', $this->_idSector, PDO::PARAM_INT);
             $query->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
             $query->bindValue(':dni', $this->_dni, PDO::PARAM_STR);
             $query->bindValue(':estado', $this->_estado, PDO::PARAM_INT);
@@ -122,6 +124,49 @@
             $query->execute();
 
             return $query->fetchObject('Usuario');
+        }
+
+        public static function ObtenerDisponiblesPorRol($rol){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE (usuarios._rol = :rol OR usuarios._rol = 'Socio') AND usuarios._estado = 0 AND usuarios._fechaBaja IS NULL ORDER BY usuarios._rol");
+            $query->bindValue(':rol', $rol, PDO::PARAM_STR);
+
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+        }
+        
+        public static function AsignarSector($rol){
+            $ret = -1;
+            switch($rol){
+                case "Cervecero":
+                    $ret = 3;
+                    break;
+                case "Bartender":
+                    $ret = 4;
+                    break;
+                case "Cocinero":
+                    $ret = 2;
+                    break;
+                case "Socio":
+                    $ret = 1;
+                    break;
+                default:
+                    $ret = 0;
+                    break;        
+            }
+            return $ret;
+        }
+
+        public static function ObtenerPorEstadoPorSector($idSector, $estado){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $query = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE (usuarios._idSector = :idSector OR usuarios._rol = 'Socio') AND usuarios._estado = :estado And usuarios._fechaBaja IS NULL ORDER BY usuarios._rol");
+            $query->bindValue(':idSector', $idSector, PDO::PARAM_INT);
+            $query->bindValue(':estado', $estado, PDO::PARAM_INT);
+
+            $query->execute();
+
+            return $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
         }
     }
 ?>
