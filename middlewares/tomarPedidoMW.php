@@ -15,7 +15,7 @@ require_once './models/token.php';
                     $rol = Token::ObtenerRol($token);
                     if($rol == 'Mozo' || $rol == "Socio"){
                         json_encode(array('datos' => Token::VerificarToken($token)));
-                        $idUser = Token::ObtenerIdUsuario();   
+                        $idUser = Token::ObtenerIdUsuario($token);   
                         echo "Token validado: \n idUsuario = $idUser";
                         return $handler->handle($request);
                     }

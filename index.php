@@ -19,7 +19,9 @@ require_once './controllers/mesaController.php';
 require_once './controllers/pedidoController.php';
 require_once './controllers/clienteController.php';
 require_once './controllers/pedidoProductoController.php';
+
 require_once './middlewares/tomarPedidoMW.php';
+require_once './middlewares/soloSocioMW.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -93,5 +95,15 @@ $app->group('/pp', function (RouteCollectorProxy $group) {
 $app->group('/login', function (RouteCollectorProxy $group){
   $group->post('[/]', \UsuarioController::class . ':Login');
 });
+
+$app->group('/aTrabajar', function (RouteCollectorProxy $group) {
+  $group->post('/prepararPedidos', \Pedido_ProductoController::class . ':PrepararPedidos');
+  $group->post('/terminarPedidos', \Pedido_ProductoController::class . ':TerminarPedidos');
+  $group->post('/servirPedidos', \Pedido_ProductoController::class . ':ServirPedidos');
+  $group->post('/cobrarPedidos', \Pedido_ProductoController::class . ':Cobrar');
+  $group->post('/cerrarMesas', \Pedido_ProductoController::class . ':CerrarMesas')->add(new SoloSocioMW());
+})->add(new TomarPedidoMW());
+
+
 
 $app->run(); 

@@ -46,7 +46,7 @@
         public static function ObtenerPorId($id){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDatos->prepararConsulta("SELECT * FROM pedidos WHERE _id = :id");
-            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
 
             $query->execute();
 

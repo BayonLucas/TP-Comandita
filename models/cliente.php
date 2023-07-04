@@ -44,9 +44,9 @@
         public static function ModificarCliente($id, $estado){       
             try{
                 $objAccesoDato = AccesoDatos::obtenerInstancia();
-                $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET _estado = :estado, WHERE _id = :id");
-                $query->bindValue(':id', $id, PDO::PARAM_STR);
-                $query->bindValue(':estado', $estado, PDO::PARAM_STR);
+                $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET _estado = :estado WHERE _id = :id");
+                $query->bindValue(':id', $id, PDO::PARAM_INT);
+                $query->bindValue(':estado', $estado, PDO::PARAM_INT);
                 $query->execute();
             }
             catch(Throwable $mensaje){
@@ -63,8 +63,8 @@
         
         public static function RecibirCodigoPedido($id, $cod){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET _codPedido = :codPedido, WHERE _id = :id");
-            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query = $objAccesoDato->prepararConsulta("UPDATE clientes SET _codPedido = :codPedido WHERE _id = :id");
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->bindValue(':codPedido', $cod, PDO::PARAM_STR);
             $query->execute();
         }

@@ -6,7 +6,7 @@ use Slim\Psr7\Response;
 
 require_once './models/token.php';
 
-    class TomarPedidoMW{
+    class SoloSocioMW{
         public function __invoke(Request $request,RequestHandler $handler) : Response{
             try{
                 $header = $request->getHeaderLine('Authorization');

@@ -5,64 +5,72 @@
     require_once './models/producto.php';
     require_once './models/mesa.php';
     require_once './models/cliente.php';
+    require_once './models/encuesta.php';
     require_once './db/picture.php';
 
     class Pedido_ProductoController{
         public function CargarUno($request, $response, $args){
-            $params = $request->getParsedBody();
-            $ppInfo = $params[0];
-            $fecha = new DateTime(date("Y-m-d H:i:s"));
-
-            //Creo la estructura del Pedido_producto
-            $pp = new Pedido_Producto();
-            $pp->_idUsuario = $ppInfo["idUsuario"]; //Obtener desde el MW
-            $pp->_idCliente = $ppInfo["idCliente"];
-            $pp->_idMesa = Pedido_Producto::ObtenerIdMesa($pp->_idCliente);
-            $pp->_codPedido = Pedido_Producto::ObtenerCodPedidoNuevo(Pedido_Producto::ObtenerTodos());
-            $pp->_codMesa = Pedido_Producto::ObtenerCodMesa($pp->_idCliente);
-            $pp->_estado = 0;
-            $pp->_fechaIngreso = date_format($fecha, 'Y-m-d H:i:s');
-            $pp->_fechaFinalizado = null;
-            $pp->_fotoCliente = null;
-            $pp->_importeTotal = 0;
-            $pp->_tiempoTotalEspera = 0;
-            $pp->_fechaAnulado = null;
-            $idPP = $pp->CrearPedido_Producto();
-
-            //Levantar pedidos adjuntados en el body
-            $auxTiempoMax = 0;
-            for($i = 1; $i < count($params); $i++){
-                $pedido = new Pedido();
-                $pedido->_id = $idPP; //Esto no existe. No puedo usar su valor
-                $pedido->_idProducto = $params[$i]["idProducto"];
-                $pedido->_cantidad = $params[$i]["cantidad"];
-                $pedido->_estado = 0;
-                $pedido->_fechaInicio = $pp->_fechaIngreso;
-                $auxTiempoEstimado = Producto::ObtenerProducto($pedido->_idProducto)->_tiempoPreparado;
-                $pedido->_fechaEstimadaFinal = date_modify($fecha, "+$auxTiempoEstimado minutes");     
-                                            
-                $pedido->CrearPedido();
-
-                if($auxTiempoMax < $auxTiempoEstimado){
-                    $auxTiempoMax = $auxTiempoEstimado;
+            try{
+                $params = $request->getParsedBody();
+                $ppInfo = $params[0];
+                $fecha = new DateTime(date("Y-m-d H:i:s"));
+    
+                //Creo la estructura del Pedido_producto
+                $pp = new Pedido_Producto();
+                $pp->_idUsuario = $ppInfo["idUsuario"]; //Obtener desde el MW
+                $pp->_idCliente = $ppInfo["idCliente"];
+                $pp->_idMesa = Pedido_Producto::ObtenerIdMesa($pp->_idCliente);
+                $pp->_codPedido = Pedido_Producto::ObtenerCodPedidoNuevo(Pedido_Producto::ObtenerTodos());
+                $pp->_codMesa = Pedido_Producto::ObtenerCodMesa($pp->_idCliente);
+                $pp->_estado = 0;
+                $pp->_fechaIngreso = date_format($fecha, 'Y-m-d H:i:s');
+                $pp->_fechaFinalizado = null;
+                $pp->_fotoCliente = null;
+                $pp->_importeTotal = 0;
+                $pp->_tiempoTotalEspera = 0;
+                $pp->_fechaAnulado = null;
+                $idPP = $pp->CrearPedido_Producto();
+    
+                //Levantar pedidos adjuntados en el body
+                $auxTiempoMax = 0;
+                for($i = 1; $i < count($params); $i++){
+                    $pedido = new Pedido();
+                    $pedido->_id = $idPP; 
+                    $pedido->_idProducto = $params[$i]["idProducto"];
+                    $pedido->_cantidad = $params[$i]["cantidad"];
+                    $pedido->_estado = 0;
+                    $pedido->_fechaInicio = $pp->_fechaIngreso;
+                    $auxTiempoEstimado = Producto::ObtenerProducto($pedido->_idProducto)->_tiempoPreparado;
+                    $pedido->_fechaEstimadaFinal = date_modify($fecha, "+$auxTiempoEstimado minutes");     
+                                                
+                    $pedido->CrearPedido();
+    
+                    if($auxTiempoMax < $auxTiempoEstimado){
+                        $auxTiempoMax = $auxTiempoEstimado;
+                    }
                 }
+                $tiempoTotalEspera = $auxTiempoMax + 10;
+                $importeTotal = Pedido_Producto::ObtenerPrecioTotal($idPP);
+    
+                //Modifico al pedido_Producto para agregar los datos finales salvo la imagen
+                $arr = array("_tiempoTotalEspera" => $tiempoTotalEspera, "_importeTotal" => $importeTotal);
+                Pedido_Producto::Modificar($idPP, $arr);
+    
+                //Cambio de estados y devolucion de datos
+                Mesa::ModificarEstadoPorCodigo($pp->_codMesa, 2);
+                Cliente::ModificarCliente($pp->_idCliente, 1);
+                Cliente::RecibirCodigoPedido($pp->_idCliente, $pp->_codPedido);
+    
+                $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
+                
             }
-            $tiempoTotalEspera = $auxTiempoMax + 10;
-            $importeTotal = Pedido_Producto::ObtenerPrecioTotal($idPP);
-
-            //Modifico al pedido_Producto para agregar los datos finales salvo la imagen
-            $arr = array("_tiempoTotalEspera" => $tiempoTotalEspera, "_importeTotal" => $importeTotal);
-            Pedido_Producto::Modificar($idPP, $arr);
-
-            //Cambio de estados y devolucion de datos
-            Mesa::ModificarEstadoPorCodigo($pp->_codMesa, 2);
-            Cliente::ModificarCliente($pp->_idCliente, 1);
-            Cliente::RecibirCodigoPedido($pp->_idCliente, $pp->_codPedido);
-
-            $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
-            
-            $response->getBody()->write($payload);
-            return $response->withHeader('Content-Type', 'application/json');
+            catch(Throwable $mensaje){
+                $payload = json_encode(array("Error Exception" => $mensaje));
+            }
+            finally{
+                $response->getBody()->write($payload);
+                return $response->withHeader('Content-Type', 'application/json');
+            }
         }
         
         public function TraerTodos($request, $response, $args){
@@ -127,25 +135,27 @@
             //Busco todos los pedidos pendientes
             $pendientes = Pedido::ObtenerPedidosPorEstado(0);
             //Los recorro por un foreach
-            foreach($pendientes as $pedido){
-                //Averiguo a que sector corresponde
-                $idSector = (Producto::ObtenerProducto($pedido->_idProducto))->_idSector;
-                //Obtengo, si hay disponibles, el user que lo prepare
-                $arrUsers = Usuario::ObtenerPorEstadoPorSector($idSector, 0); //Disponibles
-                if(count($arrUsers) != 0){
-                    //Al prepararlo, cambia los estados de los elemento segun corresponda
-                    Usuario::ModificarUsuario($arrUsers[0]->_id, 1);
-                    Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 1);
-                    Pedido_Producto::Modificar($pedido->_id, array("_estado" => 1));
-                    
-                    array_push($data, `id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector - Preparado por: {$arrUsers[0]->_id}`);
+            if(count($pendientes) > 0){
+                foreach($pendientes as $pedido){
+                    //Averiguo a que sector corresponde
+                    $idSector = (Producto::ObtenerProducto($pedido->_idProducto))->_idSector;
+                    //Obtengo, si hay disponibles, el user que lo prepare
+                    $arrUsers = Usuario::ObtenerPorEstadoPorSector($idSector, 0); //Disponibles
+                    if(count($arrUsers) > 0){
+                        //Al prepararlo, cambia los estados de los elemento segun corresponda
+                        $aux = $arrUsers[0];
+                        Usuario::ModificarUsuario($aux->_id, 1);
+                        Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 1);
+                        Pedido_Producto::Modificar($pedido->_id, array("_estado" => 1));
+                        
+                        array_push($data, "id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector - Preparado por: $aux->_id-$aux->_nombre");
+                    }
                 }
-                else{
-                    //Caso contrario, paso al siguiente y vuelvo a preguntar
-                    continue;
-                }
+                $payload = json_encode(array("listaPedidosPreparados" => $data));
             }
-            $payload = json_encode(array("listaPedidosPreparados" => $data));
+            else{
+                $payload = json_encode(array("listaPedidosPreparados" => "No se encontraron pedidos"));
+            }
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
@@ -156,21 +166,23 @@
             //Obtener listaod de pedudis en preparacion para darles fin
             $preparados = Pedido::ObtenerPedidosPorEstado(1);
             //Recorrer el listado
-            foreach($preparados as $pedido){
-                $idSector = (Producto::ObtenerProducto($pedido->_idProducto))->_idSector;
-                $arrUsers = Usuario::ObtenerPorEstadoPorSector($idSector, 1); //Ocupados
-                //Modificar estados
-                if(count($arrUsers) != 0){
-                    Usuario::ModificarUsuario($arrUsers[0]->_id, 0);
-                    Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 2);
-
-                    array_push($data, `id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector`);
+            if(count($preparados)){
+                foreach($preparados as $pedido){
+                    $idSector = (Producto::ObtenerProducto($pedido->_idProducto))->_idSector;
+                    $arrUsers = Usuario::ObtenerPorEstadoPorSector($idSector, 1); //Ocupados
+                    //Modificar estados
+                    if(count($arrUsers) > 0){
+                        Usuario::ModificarUsuario($arrUsers[0]->_id, 0);
+                        Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 2);
+    
+                        array_push($data, "id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector");
+                    }
                 }
-                else{
-                    continue;
-                }
+                $payload = json_encode(array("listaPedidosTerminados" => $data));
             }
-            $payload = json_encode(array("listaPedidosTerminados" => $data));
+            else{
+                $payload = json_encode(array("listaPedidosTerminados" => "Error en la busqueda de preparados"));
+            }
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
@@ -181,26 +193,29 @@
             //Obtengo PedidosProductos No completo
             $listaPP = Pedido_Producto::ObtenerTodosNoListos();
             //Recorro lista
-            foreach($listaPP as $item){
-                //Busco sus pedidos y constato de que esten listos para servir
-                $completo = true;
-                $listaPedidos = Pedido::ObtenerPorId($item->_id);
-                foreach($listaPedidos as $pedido){
-                    if($pedido->_estado != 2){
-                        $completo = false;
-                        break;
+            if(count($listaPP) > 0){
+                foreach($listaPP as $item){
+                    //Busco sus pedidos y constato de que esten listos para servir
+                    $completo = true;
+                    $listaPedidos = Pedido::ObtenerPorId($item->_id);
+                    foreach($listaPedidos as $pedido){
+                        if($pedido->_estado != 2){
+                            $completo = false;
+                        }
+                    }
+                    if($completo){
+                        //Modifico estados
+                        Pedido_Producto::Modificar($item->_id, array("_estado" => 2));
+                        Mesa::ModificarEstadoPorCodigo($item->_codMesa, 3);
+    
+                        array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa");
                     }
                 }
-                if($completo){
-                    //Modifico estados
-                    Pedido_Producto::Modificar($item->_id, array("_estado" => 2));
-                    Mesa::ModificarEstadoPorCodigo($item->_codMesa, 3);
-
-                    array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa");
-                }
+                $payload = json_encode(array("listaPedidosTerminados" => $data));
             }
-
-            $payload = json_encode(array("listaPedidosTerminados" => $data));
+            else{
+                $payload = json_encode(array("listaPedidosTerminados" => "Error"));
+            }
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
@@ -208,18 +223,39 @@
         //Cobrar
         public function Cobrar($request, $response, $args){
             $data = array();
+            $params = $request->getParsedBody();
+
             $listaPP = Pedido_Producto::ObtenerTodosLosListos();
-            foreach($listaPP as $item){
-                Mesa::ModificarEstadoPorCodigo($item->_codMesa, 4);
-                array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa - Importe a pagar: $item->_importeTotal");
+            if(count($listaPP) > 0){
+                foreach($listaPP as $item){
+                    Mesa::ModificarEstadoPorCodigo($item->_codMesa, 4);
+                    array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa - Importe a pagar: $item->_importeTotal");
+                    
+                    //Aplicar Encuesta
+                    $encuesta = new Encuesta();
+                    $encuesta->_idCliente = $item->_idCliente;
+                    $encuesta->_idUsuario = $item->_idUsuario;
+                    $encuesta->_idPedido = $item->_id;
+                    $encuesta->_idMesa = $item->_idMesa;
+                    $encuesta->_ptoMesa = $params["ptoMesa"];
+                    $encuesta->_ptoMozo = $params["ptoMozo"];
+                    $encuesta->_ptoResto = $params["ptoResto"];
+                    $encuesta->_ptoChef = $params["ptoChef"];
+                    $encuesta->_resenia = $params["resenia"];
+                    $encuenta->_fecha = $item->_fechaFinalizado;
+                    $encuesta->CrearEncuesta();
+                }
+                $payload = json_encode(array("listaPedidosTerminados" => $data));
             }
-            $payload = json_encode(array("listaPedidosTerminados" => $data));
+            else{
+
+            }
             $response->getBody()->write($payload);
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         //Cerrar Mesa
-        public function CerrarMesa($request, $response, $args){
+        public function CerrarMesas($request, $response, $args){
             $data = array();
             $listaPP = Pedido_Producto::ObtenerTodosLosListos();
             foreach($listaPP as $item){
