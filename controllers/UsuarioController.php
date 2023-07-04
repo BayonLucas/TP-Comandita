@@ -11,6 +11,8 @@ require_once './models/token.php';
                 $user->_nombre = $params["nombre"];
                 $user->_dni = $params["dni"];
                 $user->_estado = 0;
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+
                 $fecha = new DateTime(date("Y-m-d H:i:s"));
                 $user->_fechaRegistro = date_format($fecha, 'Y-m-d H:i:s');
                 $user->_fechaBaja = null;

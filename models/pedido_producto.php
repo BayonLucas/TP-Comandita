@@ -84,7 +84,8 @@
         public static function BorrarPedidoProducto($id){
             $objAccesoDato = AccesoDatos::obtenerInstancia();
             $query = $objAccesoDato->prepararConsulta("UPDATE pedido_producto SET _fechaAnulado = :fechaAnulado WHERE _id = :id");
-            $fecha = new DateTime(date("Y-m-d H:i:s"));
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $fecha = new DateTime(/*date("Y-m-d H:i:s")*/);
             $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->bindValue(':fechaAnulado', date_format($fecha, 'Y-m-d H:i:s'));
             $query->execute();
@@ -154,7 +155,7 @@
         }
         public static function ObtenerTodosLosListos(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $query = $objAccesoDatos->prepararConsulta("SELECT * from pedido_producto WHERE pedido_producto._estado = 2");
+            $query = $objAccesoDatos->prepararConsulta("SELECT * from pedido_producto WHERE pedido_producto._estado = 2 AND pedido_producto._fechaFinalizado IS NULL");
             $query->execute();
 
             return $query->fetchAll(PDO::FETCH_CLASS, 'Pedido_Producto');

@@ -13,6 +13,8 @@
             try{
                 $params = $request->getParsedBody();
                 $ppInfo = $params[0];
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+
                 $fecha = new DateTime(date("Y-m-d H:i:s"));
     
                 //Creo la estructura del Pedido_producto
@@ -129,6 +131,23 @@
             return $response->withHeader('Content-Type', 'application/json');
         }
 
+        public function VerEstadoPedido($request, $response, $args){
+            $idCliente = $args["idCliente"];
+            $cliente = Cliente::ObtenerCliente($idCliente);
+            if(isset($cliente) && $cliente->_codMesa != null && $cliente->_codPedido != null){
+                $pedido = Pedido_Producto::ObtenerPedidoPorCodigos($cliente->_codPedido, $cliente->_codMesa);
+                $payload = json_encode(array("Consulta del Cliente por codigos" => "Estado del pedido: $pedido->_estado - Duracion del pedido: $pedido->_tiempoTotalEspera"));
+            }
+            else{
+                $payload = json_encode(array("Consulta del Cliente por codigos" => "El cliente no posee los codigos correspondientes"));
+            }
+            $response->getBody()->write($payload);
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+
+
+
         //Preparar Pedido
         public function PrepararPedidos($request, $response, $args){
             $data = array();
@@ -148,7 +167,7 @@
                         Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 1);
                         Pedido_Producto::Modificar($pedido->_id, array("_estado" => 1));
                         
-                        array_push($data, "id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector - Preparado por: $aux->_id-$aux->_nombre");
+                        array_push($data, "id Pedido: $pedido->_id - id Producto: $pedido->_idProducto - Sector: $idSector - Preparado por: $aux->_id-$aux->_nombre-$aux->_rol");
                     }
                 }
                 $payload = json_encode(array("listaPedidosPreparados" => $data));
@@ -207,6 +226,10 @@
                         //Modifico estados
                         Pedido_Producto::Modificar($item->_id, array("_estado" => 2));
                         Mesa::ModificarEstadoPorCodigo($item->_codMesa, 3);
+                        $auxListaPedidos = Pedido::ObtenerPorId($item->_id);
+                        foreach($auxListaPedidos as $pedido){
+                            Pedido::ModificarPedido($pedido->_id, $pedido->_idProducto, "estado", 3);
+                        }
     
                         array_push($data, "id PedidoProducto: $item->_id - id Cliente: $item->_idCliente - codPedido: $item->_codPedido - codMesa: $item->_codMesa");
                     }

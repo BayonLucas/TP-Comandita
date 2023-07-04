@@ -19,7 +19,8 @@ require_once './models/producto.php';
                 $pedido->_idProducto = $params["idProducto"];
                 $pedido->_cantidad = $params["cantidad"];
                 $pedido->_estado = 0;
-                
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+
                 $fecha = new DateTime();
                 $pedido->_fechaInicio = $fecha->format("Y-m-d H:i:s");
 

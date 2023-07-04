@@ -99,6 +99,7 @@ $app->group('/login', function (RouteCollectorProxy $group){
 
 $app->group('/aTrabajar', function (RouteCollectorProxy $group) {
   $group->post('/prepararPedidos', \Pedido_ProductoController::class . ':PrepararPedidos');
+  $group->post('/consulta/{idCliente}', \Pedido_ProductoController::class . ':VerEstadoPedido');
   $group->post('/terminarPedidos', \Pedido_ProductoController::class . ':TerminarPedidos');
   $group->post('/servirPedidos', \Pedido_ProductoController::class . ':ServirPedidos');
   $group->post('/cobrarPedidos', \Pedido_ProductoController::class . ':Cobrar');

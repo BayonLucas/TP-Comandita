@@ -3,11 +3,13 @@ require_once './models/cliente.php';
 require_once './models/mesa.php';
 
     class ClienteController{
+        
         public function CargarUno($request, $response, $args){
             $params = $request->getParsedBody();
                 $client = new Cliente();
                 $client->_nombre = $params["nombre"];
                 $client->_estado = 0;
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
 
                 $fecha = new DateTime();
                 $client->_fechaIngreso = $fecha->format("Y-m-d H:i:s");
