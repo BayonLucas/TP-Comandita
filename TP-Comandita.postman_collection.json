@@ -1,0 +1,1634 @@
+{
+	"info": {
+		"_postman_id": "99ec147f-d7ed-4f2e-9fe4-370e851365bd",
+		"name": "TP-Comandita",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20357909"
+	},
+	"item": [
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "altaSocio1 - ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Socio",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Lucas",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "40673980",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaSocio2 - ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Socio",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Agustin",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "32165485",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaSocio3 - ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Socio",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Franco",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "27858561",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaBartender- ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Bartender",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Ezrra",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "22222222",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaCervecero- ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Cervecero",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Gabriel",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "43987987",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaCocineros- ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Cocinero",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Raul",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "16582462",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaMozos- ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Mozo",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Pruebita",
+									"type": "text"
+								},
+								{
+									"key": "dni",
+									"value": "7777777",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "listarTodos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "rol",
+									"value": "Mozo",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": "Clare",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "dni",
+									"value": "99999999",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:666/usuarios/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "listarPorRol",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/Socio",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"Socio"
+							],
+							"query": [
+								{
+									"key": "rol",
+									"value": "Mozo",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "traerUnoPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/id/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"id",
+								"3"
+							],
+							"query": [
+								{
+									"key": "rol",
+									"value": "Mozo",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BorrarUno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": 21\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarFechaBaja",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 21,\r\n    \"estado\": null,\r\n    \"fechaBaja\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 21,\r\n    \"estado\": 1,\r\n    \"fechaBaja\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstado+FechaBaja",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 21,\r\n    \"estado\": 0,\r\n    \"fechaBaja\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/usuarios/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"usuarios",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "altaProducto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "idSector",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "pruebita",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "9999",
+									"type": "text"
+								},
+								{
+									"key": "tiempoPreparado",
+									"value": "99",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/productos/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "listarTodos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/productos/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "listarPorSector",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/productos/2"
+					},
+					"response": []
+				},
+				{
+					"name": "listarProductoPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/productos/id/5"
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarPrecio",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 11,\r\n    \"precio\": 1350\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/productos/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"productos",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BorrarUno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": 17\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/productos/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"productos",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sectores",
+			"item": [
+				{
+					"name": "altaSector",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Barra de Tragos y Vinos",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/sectores/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "traerUnoPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Barra de Tragos y Vinos",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/sectores/id/3"
+					},
+					"response": []
+				},
+				{
+					"name": "listarTodos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Barra de Tragos y Vinos",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/sectores/listar"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mesas",
+			"item": [
+				{
+					"name": "altaMesa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "estado",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "codMesa",
+									"value": "56FGH",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/mesas/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "traerUnoPorCodigoMesa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Barra de Tragos y Vinos",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/mesas/ASD45"
+					},
+					"response": []
+				},
+				{
+					"name": "listarMesa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Barra de Tragos y Vinos",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/mesas/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstadoMesa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"estado\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/mesas/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"mesas",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedidos",
+			"item": [
+				{
+					"name": "altaPedido1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "cantidad",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/pedidos/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "altaPedido2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "16",
+									"type": "text"
+								},
+								{
+									"key": "cantidad",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/pedidos/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "listarTodos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/pedidos/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "listarPorId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/pedidos/id/1"
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"idProducto\": 13,\r\n    \"variable\": \"estado\",\r\n    \"valor\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/pedidos/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"pedidos",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarCantidad",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"idProducto\": 13,\r\n    \"variable\": \"cantidad\",\r\n    \"valor\": 99\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/pedidos/modificar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"pedidos",
+								"modificar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BorrarUno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": 0,\r\n        \"idProducto\": 13\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/pedidos/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"pedidos",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clientes",
+			"item": [
+				{
+					"name": "altaCliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Lia",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/clientes/alta"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PedidoProducto",
+			"item": [
+				{
+					"name": "Manejo de Estados",
+					"item": [
+						{
+							"name": "PrepararPedidos - Usuario no Autorizado",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjY4NDgsImV4cCI6MTgxNzk2Njg0OCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6NCwicm9sIjoiQmFydGVuZGVyIiwiYWRtaW4iOiJmYWxzZSJ9.TaWR5dVgcgMw7C4HKNWPnWKvBfVacYOvgHOzSPFmkS0"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:666/aTrabajar/prepararPedidos"
+							},
+							"response": []
+						},
+						{
+							"name": "PrepararPedidos - Mozo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:666/aTrabajar/prepararPedidos"
+							},
+							"response": []
+						},
+						{
+							"name": "TerminarPedidos - Mozo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:666/aTrabajar/terminarPedidos"
+							},
+							"response": []
+						},
+						{
+							"name": "ServirPedidos - Mozo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:666/aTrabajar/servirPedidos"
+							},
+							"response": []
+						},
+						{
+							"name": "CobrarPedidos - Mozo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": "http://localhost:666/aTrabajar/cobrarPedidos"
+							},
+							"response": []
+						},
+						{
+							"name": "CerrarMesa - Mozo (Usuario no Autorizado)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": "http://localhost:666/aTrabajar/cerrarMesas"
+							},
+							"response": []
+						},
+						{
+							"name": "CerrarMesa - Socio",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjMxNTgsImV4cCI6MTgxNzk2MzE1OCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MSwicm9sIjoiU29jaW8iLCJhZG1pbiI6InRydWUifQ.NjqvJbRLYOjZGsR7FOXP0w1X6UjTKIYExQh9i75EGQs"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": "http://localhost:666/aTrabajar/cerrarMesas"
+							},
+							"response": []
+						},
+						{
+							"name": "Encuestar",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjMxNTgsImV4cCI6MTgxNzk2MzE1OCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MSwicm9sIjoiU29jaW8iLCJhZG1pbiI6InRydWUifQ.NjqvJbRLYOjZGsR7FOXP0w1X6UjTKIYExQh9i75EGQs"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "ptoMesa",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "ptoMozo",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "ptoResto",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "ptoChef",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "resenia",
+											"value": "No vuelvo MAS!!",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/aTrabajar/encuestar/16"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PP Alta - 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idUsuario\": 1,\r\n        \"idCliente\": 10\r\n    },\r\n    {\r\n        \"idProducto\": 3,\r\n        \"cantidad\": 2\r\n    },\r\n    {\r\n        \"idProducto\": 15,\r\n        \"cantidad\": 1\r\n    }\r\n    ,\r\n    {\r\n        \"idProducto\": 2,\r\n        \"cantidad\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:666/pp/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "PP Alta desde Mozo Token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idUsuario\": 17,\r\n        \"idCliente\": 14\r\n    },\r\n    {\r\n        \"idProducto\": 2,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 4,\r\n        \"cantidad\": 2\r\n    },\r\n    {\r\n        \"idProducto\": 3,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 1,\r\n        \"cantidad\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:666/pp/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedidos_Productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:666/pp/listar"
+					},
+					"response": []
+				},
+				{
+					"name": "PP Traer por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:666/pp/id/4"
+					},
+					"response": []
+				},
+				{
+					"name": "ModificarEstado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_estado\": 2,\r\n    \"_importeTotal\": 9999\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/pp/modificar/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"pp",
+								"modificar",
+								"4"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PP BorrarUno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:666/pp/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"pp",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "21",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PP TomarFoto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/lucas/OneDrive/Escritorio/Mis Cosas/Fotos/Mas Cosas/20160827_193743.jpg"
+								}
+							]
+						},
+						"url": "http://localhost:666/pp/tomarFoto"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Otros",
+			"item": [
+				{
+					"name": "Descargar CSV",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:666/csv/descargar/productos"
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar CSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "csv",
+									"type": "file",
+									"src": "/C:/Users/lucas/Downloads/productos.csv"
+								}
+							]
+						},
+						"url": "http://localhost:666/csv/cargar/productos"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funcionalidades Minimas",
+			"item": [
+				{
+					"name": "1- Una moza toma el pedido de (jwt + mozo) (Luna)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idUsuario\": 17,\r\n        \"idCliente\": 15\r\n    },\r\n    {\r\n        \"idProducto\": 2,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 4,\r\n        \"cantidad\": 2\r\n    },\r\n    {\r\n        \"idProducto\": 3,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 1,\r\n        \"cantidad\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:666/pp/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "1- Una moza toma el pedido de (jwt + mozo) (Lia)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"idUsuario\": 17,\r\n        \"idCliente\": 16\r\n    },\r\n    {\r\n        \"idProducto\": 8,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 10,\r\n        \"cantidad\": 2\r\n    },\r\n    {\r\n        \"idProducto\": 9,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 6,\r\n        \"cantidad\": 1\r\n    },\r\n    {\r\n        \"idProducto\": 14,\r\n        \"cantidad\": 2\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:666/pp/alta"
+					},
+					"response": []
+				},
+				{
+					"name": "2- El mozo saca una foto de la mesa (Luna)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/lucas/Downloads/exocet.jpeg"
+								}
+							]
+						},
+						"url": "http://localhost:666/pp/tomarFoto"
+					},
+					"response": []
+				},
+				{
+					"name": "2- El mozo saca una foto de la mesa (Lia)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "13",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/lucas/Downloads/chololate.jpeg"
+								}
+							]
+						},
+						"url": "http://localhost:666/pp/tomarFoto"
+					},
+					"response": []
+				},
+				{
+					"name": "3 - PrepararPedidos - Mozo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/aTrabajar/prepararPedidos"
+					},
+					"response": []
+				},
+				{
+					"name": "4 - Ver el estado del pedido (Luna)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/aTrabajar/consulta/15"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Clare",
+							"description": "dni",
+							"type": "text"
+						},
+						{
+							"key": "dni",
+							"value": "99999999",
+							"type": "text"
+						},
+						{
+							"key": "admin",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:666/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Token - Socio Lucas",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjMxNTgsImV4cCI6MTgxNzk2MzE1OCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MSwicm9sIjoiU29jaW8iLCJhZG1pbiI6InRydWUifQ.NjqvJbRLYOjZGsR7FOXP0w1X6UjTKIYExQh9i75EGQs"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "Token - Socio Lucas"
+			},
+			"response": []
+		},
+		{
+			"name": "Token - Bartender Aldana",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjY4NDgsImV4cCI6MTgxNzk2Njg0OCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6NCwicm9sIjoiQmFydGVuZGVyIiwiYWRtaW4iOiJmYWxzZSJ9.TaWR5dVgcgMw7C4HKNWPnWKvBfVacYOvgHOzSPFmkS0"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "Token - Socio Lucas"
+			},
+			"response": []
+		},
+		{
+			"name": "Token - Cervecero Ezequiel",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjY5NDAsImV4cCI6MTgxNzk2Njk0MCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6OCwicm9sIjoiQ2VydmVjZXJvIiwiYWRtaW4iOiJmYWxzZSJ9.lsbtGxcOO9PU_XIwsJ2LVjMihnunDXC7X7VoTTk7XNk"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "Token - Socio Lucas"
+			},
+			"response": []
+		},
+		{
+			"name": "Token - Cocinera Sol",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODgzNjcwNDAsImV4cCI6MTgxNzk2NzA0MCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTEsInJvbCI6IkNvY2luZXJvIiwiYWRtaW4iOiJmYWxzZSJ9.0vnvd_fy_D713D8-2pwOrNQlK5ZOxxPs_Jfy3AJnlcs"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "Token - Socio Lucas"
+			},
+			"response": []
+		},
+		{
+			"name": "Token - Mozo Clare",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODg0MTAzNzQsImV4cCI6MTgxODAxMDM3NCwiYXVkIjoiYzY1ODNkOGNkNWQ1N2Y3MzgzOTc4Y2FiOTYyZDA2YzIyYmIyMmZiOSIsImlkVXN1YXJpbyI6MTcsInJvbCI6Ik1vem8iLCJhZG1pbiI6ImZhbHNlIn0.lmPbv7XsP2BMpOg4P6uxy4bEMVgSLsh4nPISP3COLao"
+					}
+				},
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
